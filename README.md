@@ -1,0 +1,2 @@
+
+  README stub for ashmasters
