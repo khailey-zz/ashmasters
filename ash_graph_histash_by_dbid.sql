@@ -4,6 +4,8 @@
    input DBID
    time filter by # of days, input variable &v_days
 
+   ATTENTION: number of CPU cores is hard coded to 4. 
+              future enhancement is to get CPU_COUNT by DBID instead
 
    Output looks like
 
@@ -149,4 +151,3 @@ group by start_time
 ) aveact
 order by start_time
 /
-
