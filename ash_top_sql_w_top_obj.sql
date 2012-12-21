@@ -1,4 +1,17 @@
 
+/*
+
+SQL_ID         PLAN_HASH ACTION CPU WAIT   IO TOTAL P_IO TOP_OBJ
+------------- ---------- ------ --- ---- ---- ----- ---- -------- 
+a22dcjdxfra19 3173797817 SELECT  50    0   10   60   100
+8szmwam7fysa3 2976124318 INSERT   0    0   26   26    31 ORDERS
+7jycxu86n60qh 1128103955 SELECT  15    0    0   15
+7wgks43wrjtrz 3327148973 SELECT   0    0   10   10    60 ORDERS
+fz2g0vsbq9j8m 1334423612 SELECT   7    0    0    7
+5dfmd823r8dsp  646114857 INSERT   3    0    3    6   100
+
+*/
+
 col PCT_IO_OBJ for a25
 col aud_action for a11
 with master as  (
