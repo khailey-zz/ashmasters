@@ -5,21 +5,21 @@
 
    output looks like
 
-   SQL_ID         PLAN_HASH TYPE                   CPU       WAIT        IO      TOTAL
-   ------------- ---------- ---------------- --------- ---------- --------- ----------
-   fgzp9yqqjcjvm  707845071 UPDATE                25.0         95    4081.0       4201
-   8u8y8mc1qxd98  131695425 SELECT                18.0         57    3754.0       3829
-   cfk8gy594h42s 3743737989 SELECT              2021.0         17      82.0       2120
-   cnx6ht8bdmf4c          0 PL/SQL EXECUTE       546.0        367     868.0       1781
-   gyj8wh7vx960y 1736948211 SELECT               197.0         11    1227.0       1435
-   1wmz1trqkzhzq 1384060092 SELECT               639.0         20     679.0       1338
-   5vjzz8f5ydqm7 1375932572 SELECT               538.0          0     541.0       1079
-   8w08jp8urfj6t 3134135242 SELECT               118.0         10     945.0       1073
+   SQL_ID         PLAN_HASH TYPE                 CPU         WAIT      IO        TOTAL
+   ------------- ---------- ---------------- ------- ------------ ------- ------------
+   fgzp9yqqjcjvm  707845071 UPDATE                25           95    4081         4201
+   8u8y8mc1qxd98  131695425 SELECT                18           57    3754         3829
+   cfk8gy594h42s 3743737989 SELECT              2021           17      82         2120
+   cnx6ht8bdmf4c          0 PL/SQL EXECUTE       546          367     868         1781
+   gyj8wh7vx960y 1736948211 SELECT               197           11    1227         1435
+   1wmz1trqkzhzq 1384060092 SELECT               639           20     679         1338
+   5vjzz8f5ydqm7 1375932572 SELECT               538            0     541         1079
+   8w08jp8urfj6t 3134135242 SELECT               118           10     945         1073
 
 */
 col type for a10
-col "CPU" for 999999.9
-col "IO" for 999999.9
+col "CPU" for 999999
+col "IO" for 999999
 select * from (
 select
      ash.SQL_ID , ash.SQL_PLAN_HASH_VALUE Plan_hash, aud.name type,
@@ -31,7 +31,7 @@ select
 from dba_hist_active_sess_history ash,
      audit_actions aud
 where SQL_ID is not NULL
-   and ash.dbid=&DBID
+   -- and ash.dbid=&DBID
    and ash.sql_opcode=aud.action
    -- and ash.sample_time > sysdate - &minutes /( 60*24)
 group by sql_id, SQL_PLAN_HASH_VALUE   , aud.name
