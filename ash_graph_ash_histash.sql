@@ -1,4 +1,3 @@
-
 /*
    ASH graph from v$active_session_history and dba_hist_active_sess_history 
    no filter no DBID
@@ -33,7 +32,7 @@
 
 */
 
-Def v_secs=3600 --  bucket size
+Def v_secs=60 --  bucket size
 Def v_days=1 --  total time analyze
 Def v_bars=5 -- size of one AAS in characters
 Def v_graph=80
@@ -43,8 +42,8 @@ col graph format a30
 col fpct format 9.99
 col spct format 9.99
 col tpct format 9.99
-col aas1 format 9.99
-col aas2 format 9.99
+col aas1 format 99.99
+col aas2 format 99.99
 
 
 select to_char(start_time,'DD HH24:MI:SS'),
