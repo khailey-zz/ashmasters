@@ -1,5 +1,4 @@
 
-
 /*
 
 
@@ -22,6 +21,10 @@ AAS SQL_ID        PCT OBJ          SUB_OBJ OTYPE      EVENT      F# TABLESPAC CO
                     3 CUSTOMERS    SYS_P29 TABLE PART  sequentia  4 USERS     PERMANENT
                     3 CUSTOMERS    SYS_P21 TABLE PART  sequentia  4 USERS     PERMANENT
 
+ Version When        Who            What?
+ ------- ----------- -------------- ----------------------------------------------------------------------------------------------
+ 1.0     Jan 19 2013 K. Hailey      First version
+ 1.0.1   Feb 26 2013 M. Krijgsman   Bug fix: removed tcnt from order by ;)
 
 */
 
@@ -84,7 +87,7 @@ where
    f.file_id = io.p1
    and o.object_id (+)= io.CURRENT_OBJ#
    and tbs.tablespace_name= f.tablespace_name 
-Order by tcnt, sql_id, cnt
+Order by /* tcnt */, sql_id, cnt
 /
 
 clear breaks
