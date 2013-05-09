@@ -20,6 +20,17 @@ g5u58zpg0tuk8     97       1359    1     62.0 11-04-12 02:23:37 11-04-13 02:51:0
 
 */
 
+
+set linesize 150
+
+define v_dbid=NULL;
+select &v_dbid from dual;
+col f_dbid new_value v_dbid
+select &database_id f_dbid from dual;
+select &v_dbid from dual;
+select nvl(&v_dbid,dbid) f_dbid from v$database;
+select &v_dbid from dual;
+
 col 1 for 99999
 col 2 for 99999
 col 3 for 9999
@@ -30,6 +41,7 @@ col ct for 99999
 col mn for 999
 col av for 99999.9
 col longest_sql_exec_id for A10
+col max_run_time for A35
  
 WITH pivot_data AS (
 SELECT
@@ -71,6 +83,7 @@ FROM (
            FROM
               dba_hist_active_sess_history
            WHERE sql_exec_id IS NOT NULL
+             and dbid=&v_dbid
         )
    GROUP BY sql_id,sql_exec_id
 )

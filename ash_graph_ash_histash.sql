@@ -1,3 +1,4 @@
+set linesize 150
 /*
    ASH graph from v$active_session_history and dba_hist_active_sess_history 
    no filter no DBID
@@ -44,6 +45,8 @@ col spct format 9.99
 col tpct format 9.99
 col aas1 format 99.99
 col aas2 format 99.99
+col first format A15
+col second format A15
 
 
 select to_char(start_time,'DD HH24:MI:SS'),

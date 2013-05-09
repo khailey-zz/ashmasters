@@ -17,6 +17,21 @@ bzyny95313u12        114       2599          0     46.5    113      0     0     
 
 */
 
+
+
+--col f_minutes new_value v_minutes
+--select &minutes f_minutes from dual;
+--select &v_minutes from dual;
+
+define v_dbid=NULL;
+select &v_dbid from dual;
+col f_dbid new_value v_dbid
+select &database_id f_dbid from dual;
+select &v_dbid from dual;
+select nvl(&v_dbid,dbid) f_dbid from v$database;
+select &v_dbid from dual;
+
+
 col 1 for 99999
 col 2 for 99999
 col 3 for 9999
@@ -52,6 +67,7 @@ from (
            from
               dba_hist_active_sess_history
            where sql_exec_id is not null
+            and  dbid=&v_dbid
     )
      group by sql_id,sql_exec_id
 )

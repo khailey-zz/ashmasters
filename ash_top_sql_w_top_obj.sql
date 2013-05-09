@@ -12,6 +12,17 @@ fz2g0vsbq9j8m 1334423612 SELECT   7    0    0    7
 
 */
 
+
+
+
+define v_dbid=NULL;
+select &v_dbid from dual;
+col f_dbid new_value v_dbid
+select &database_id f_dbid from dual;
+select &v_dbid from dual;
+select nvl(&v_dbid,dbid) f_dbid from v$database;
+select &v_dbid from dual;
+
 col PCT_IO_OBJ for a25
 col aud_action for a11
 with master as  (
@@ -37,6 +48,7 @@ with master as  (
         sum(decode(ash.session_state,'ON CPU',1,1)) total
      from dba_hist_active_sess_history ash
      where  SQL_ID is not NULL
+       and  dbid=&v_dbid
      group by sql_id, SQL_PLAN_HASH_VALUE , sql_opcode, current_obj#
    )
 group by sql_id, SQL_PLAN_HASH_VALUE , sql_opcode, objn,io
@@ -52,9 +64,11 @@ select
         sum(total) total,
         round(max(decode(seq,1,pct,null)),2)*100  pct_io,
         max(decode(seq,1,o.object_name,null)) pct_io_obj
-from master,audit_actions aud , dba_objects o
+--from master,audit_actions aud , dba_objects o
+from master,audit_actions aud , DBA_HIST_SEG_STAT_OBJ o
 where
-        objn=o.object_id(+) 
+    --    objn=o.object_id(+) 
+        objn=o.obj#(+) 
     and sql_opcode=aud.action
 group by sql_id,sql_plan_hash_value,aud.name
 order by total desc )

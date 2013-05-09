@@ -1,4 +1,5 @@
 
+set linesize 120
 
 /*
  when block type is not found in v$waitclass then it's undo/rbs segement 
