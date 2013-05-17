@@ -21,6 +21,15 @@
 */
 
 
+define v_dbid=NULL;
+select &v_dbid from dual;
+col f_dbid new_value v_dbid
+select &database_id f_dbid from dual;
+select &v_dbid from dual;
+select nvl(&v_dbid,dbid) f_dbid from v$database;
+select &v_dbid from dual;
+
+
 select
        btime,
        round((time_ms_end-time_ms_beg)/nullif(count_end-count_beg,0),3) avg_ms
@@ -38,7 +47,9 @@ from
        DBA_HIST_SNAPSHOT s
 where
          s.snap_id=e.snap_id
-   and e.event_name like '%&1%'
+   and e.event_name like '%&like_event%'
+   and e.dbid=&v_dbid
+   and s.dbid=&v_dbid
 order by begin_interval_time
 )
 order by btime
