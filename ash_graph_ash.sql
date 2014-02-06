@@ -57,14 +57,14 @@ select
         decode(spct,null,null,second)                        second,
         substr(
              substr(
-                  rpad('+',round((cpu*&v_bars)/&v_secs),'+')             ||
-                  rpad('-',round((waits*&v_bars)/&v_secs),'-')           ||
+                  rpad('+',round((  cpu/&v_secs)*&v_bars),'+’) ||
+                  rpad('-',round((waits/&v_secs)*&v_bars),'-') ||
                   rpad(' ',p.value * &v_bars,' ')
                ,0,(p.value * &v_bars)) ||
              p.value  ||
              substr(
-                  rpad('+',round((cpu*&v_bars)/&v_secs),'+')             ||
-                  rpad('-',round((waits*&v_bars)/&v_secs),'-')           ||
+                  rpad('+',round((  cpu/&v_secs)*&v_bars),'+’) ||
+                  rpad('-',round((waits/&v_secs)*&v_bars),'-') ||
                   rpad(' ',p.value * &v_bars,' '),
                (p.value * &v_bars))
            ,0,&v_graph)
