@@ -31,10 +31,8 @@
     The columns "FIRST" and "SECOND" represent the top two things happening on the database. 
 
 */
-
-
-Def v_secs=3600 --  bucket size
-Def v_days=1 --  total time analyze
+ef v_secs=3600 --  bucket size
+Def v_secs=60 --  bucket size
 Def v_bars=5 -- size of one AAS in characters
 Def v_graph=80
 
@@ -45,33 +43,34 @@ col spct format 9.99
 col tpct format 9.99
 col aas1 format 9.99
 col aas2 format 9.99
+col first format a15
+col second format a15
 
-
-select to_char(start_time,'DD HH24:MI:SS'),
-       samples,
-       --total,
-       --waits,
-       --cpu,
-       round(fpct * (total/&v_secs),2) aas1,
-       decode(fpct,null,null,first) first,
-       round(spct * (total/&v_secs),2) aas2,
-       decode(spct,null,null,second) second,
-        substr(substr(rpad('+',round((cpu*&v_bars)/&v_secs),'+') ||
-        rpad('-',round((waits*&v_bars)/&v_secs),'-')  ||
-        rpad(' ',p.value * &v_bars,' '),0,(p.value * &v_bars)) ||
-        p.value  ||
-        substr(rpad('+',round((cpu*&v_bars)/&v_secs),'+') ||
-        rpad('-',round((waits*&v_bars)/&v_secs),'-')  ||
-        rpad(' ',p.value * &v_bars,' '),(p.value * &v_bars),10) ,0,30)
+select
+        to_char(to_date(
+                         trunc((id*&v_secs)/ (24*60*60)) || ' ' ||  -- Julian days
+                           mod((id*&v_secs),  24*60*60)             -- seconds in the day
+                , 'J SSSSS' ), 'MON DD YYYY HH24:MI:SS')     start_time,
+        round(fpct * ((cpu+waits)/&v_secs),2)                aas1,
+        decode(fpct,null,null,first)                         first,
+        round(spct * ((cpu+waits)/&v_secs),2)                aas2,
+        decode(spct,null,null,second)                        second,
+        substr(
+             substr(
+                  rpad('+',round((cpu*&v_bars)/&v_secs),'+')             ||
+                  rpad('-',round((waits*&v_bars)/&v_secs),'-')           ||
+                  rpad(' ',p.value * &v_bars,' ')
+               ,0,(p.value * &v_bars)) ||
+             p.value  ||
+             substr(
+                  rpad('+',round((cpu*&v_bars)/&v_secs),'+')             ||
+                  rpad('-',round((waits*&v_bars)/&v_secs),'-')           ||
+                  rpad(' ',p.value * &v_bars,' '),
+               (p.value * &v_bars))
+           ,0,&v_graph)
         graph
-     --  spct,
-     --  decode(spct,null,null,second) second,
-     --  tpct,
-     --  decode(tpct,null,null,third) third
 from (
-select start_time
-     , max(samples) samples
-     , sum(top.total) total
+select id
      , round(max(decode(top.seq,1,pct,null)),2) fpct
      , substr(max(decode(top.seq,1,decode(top.event,'ON CPU','CPU',event),null)),0,15) first
      , round(max(decode(top.seq,2,pct,null)),2) spct
@@ -82,34 +81,29 @@ select start_time
      , sum(cpu) cpu
 from (
   select
-       to_date(tday||' '||tmod*&v_secs,'YYMMDD SSSSS') start_time
+       id
      , event
-     , total
-     , row_number() over ( partition by id order by total desc ) seq
-     , ratio_to_report( sum(total)) over ( partition by id ) pct
-     , max(samples) samples
-     , sum(decode(event,'ON CPU',total,0))    cpu
-     , sum(decode(event,'ON CPU',0,total))    waits
+     , row_number() over ( partition by id order by event_count desc ) seq  -- 1 for top wait, 2 for 2nd, etc
+     , ratio_to_report( event_count ) over ( partition by id )         pct  -- % of event_count to total for id
+     , sum(decode(event,'ON CPU',event_count,0))                       cpu
+     , sum(decode(event,'ON CPU',0,event_count))                       waits
   from (
    select
-         to_char(sample_time,'YYMMDD')                      tday
-       , trunc(to_char(sample_time,'SSSSS')/&v_secs)          tmod
-       , to_char(sample_time,'YYMMDD')||trunc(to_char(sample_time,'SSSSS')/&v_secs) id
-       , decode(ash.session_state,'ON CPU','ON CPU',ash.event)     event
-       , sum(decode(session_state,'ON CPU',1,decode(session_type,'BACKGROUND',0,1))) total
-       , (max(sample_id)-min(sample_id)+1)                    samples
+         trunc((to_char(sample_time,'J')*(24*60*60)+to_char(sample_time,'SSSSS'))/&v_secs) id
+      , decode(session_state,'ON CPU','ON CPU',ash.event)     event
+       , count(*) event_count
      from
         v$active_session_history ash
-     group by  trunc(to_char(sample_time,'SSSSS')/&v_secs)
-            ,  to_char(sample_time,'YYMMDD')
-            ,  decode(ash.session_state,'ON CPU','ON CPU',ash.event)
+     group by
+         trunc((to_char(sample_time,'J')*(24*60*60)+to_char(sample_time,'SSSSS'))/&v_secs)
+       , decode(session_state,'ON CPU','ON CPU',ash.event)
   )  chunks
-  group by id, tday, tmod, event, total
+  group by id,  event, event_count
 ) top
-group by start_time
+group by id
 ) aveact,
   v$parameter p
 where p.name='cpu_count'
-order by start_time
+order by id
 /
 
