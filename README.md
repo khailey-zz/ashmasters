@@ -5,8 +5,9 @@ queries contained in repository
 
 * ash_bbw.sql - buffer busy wait analysis
 * ash_enq.sql - enqueue wait analays
-* ash_graph_ash.sql - basic ASH load chart in ASCII art
-* ash_graph_ash_histash.sql - ASH load chart from DBA_HIST_ACTIVE_SESS_HISTORY only
+* ash_graph.sql - basic ASH load chart in ASCII art more for demo purposes
+* ash_graph_waits.sql - basic ASH load chart in ASCII art with top 2 waits per bucket
+* ash_graph_waits_histash.sql - ASH load chart from DBA_HIST_ACTIVE_SESS_HISTORY only
 * ash_graph_histash_by_dbid.sql - ASH load chart from DBA_HIST_ACTIVE_SESS_HISTORY only, input DBID
 * ash_graph_histash_by_dbid_program.sql - ASH load chart from DBA_HIST_ACTIVE_SESS_HISTORY only, input DBID and PROGRAM
 * ash_graph_histash_by_dbid_sqlid.sql - ASH load chart from DBA_HIST_ACTIVE_SESS_HISTORY only, input DBID and a SQL_ID
