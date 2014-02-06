@@ -30,6 +30,8 @@
     The "+" represent CPU, "o" represent I/O and "-" represent a wait.
     The columns "FIRST" and "SECOND" represent the top two things happening on the database. 
 
+hello from RMOUG
+
 */
 ef v_secs=3600 --  bucket size
 Def v_secs=60 --  bucket size
