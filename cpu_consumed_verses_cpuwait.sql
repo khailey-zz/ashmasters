@@ -1,9 +1,8 @@
-
 /* 
 
 see
 
-   http://dboptimizer.com/2011/07/21/oracle-cpu-time
+   http://kylehailey.com/oracle-cpu-time/
 
 
 output looks like
