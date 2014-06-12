@@ -1,3 +1,4 @@
+-- http://blog.tanelpoder.com/2013/11/06/diagnosing-buffer-busy-waits-with-the-ash_wait_chains-sql-script-v0-2/
 --------------------------------------------------------------------------------
 --
 -- File name:   ash_wait_chains.sql (v0.2 BETA)
