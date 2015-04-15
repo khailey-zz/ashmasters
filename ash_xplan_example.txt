@@ -1,5 +1,22 @@
+
+Usage:
+
 old   1: select * from table(ash_xplan.display_cursor('&&v_sql_id',&&v_chd_no))
 new   1: select * from table(ash_xplan.display_cursor('apbyuvc6r4fjn',         0))
+
+Output prepends to the standard DBMS_XPLAN output
+Columns: 
+   ASHtime - time spent on that line
+   Last (s) -  shows # of seconds since SQL Plan Monitor last updated the line
+               determine Which line least recently updated, which most recently?
+   RowsRtn -  shows # of row returned so far in each operation
+   PhyRead - shows volume of bytes read from disk
+   PhyWrt -shows volume of bytes written to datafiles or tempfiles
+   PGA Mem -  shows volume of bytes used for sorting or hashing in private process memory
+   Pga2Tmp -  shows volume of bytes spilling out of the PGA in private process memory to the temporary tablespace(s)
+
+Output:
+
 
 Current datetime:                       21-FEB-2014 11:55:16
 -------------------------------------------------------------------------------------------------------------------------------------------
