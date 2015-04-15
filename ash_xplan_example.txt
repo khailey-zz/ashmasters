@@ -1,0 +1,567 @@
+old   1: select * from table(ash_xplan.display_cursor('&&v_sql_id',&&v_chd_no))
+new   1: select * from table(ash_xplan.display_cursor('apbyuvc6r4fjn',         0))
+
+Current datetime:                       21-FEB-2014 11:55:16
+-------------------------------------------------------------------------------------------------------------------------------------------
+| SQL Exec ID | SQL started At       | Session Started At   | Session Last Seen    | Elapsed                 | Since It Finished          |
+-------------------------------------------------------------------------------------------------------------------------------------------
+|             |                      | 21-FEB-2014 10:48:04 | 21-FEB-2014 11:38:51 | +000000000 00:50:47.818 | +000000000 00:16:24.408618 |
+| 16777216    | 21-FEB-2014 10:48:04 | 21-FEB-2014 10:48:06 | 21-FEB-2014 11:11:11 | +000000000 00:23:05.540 | +000000000 00:44:04.686618 |
+| 16777217    | 21-FEB-2014 11:38:51 | 21-FEB-2014 11:38:52 | 21-FEB-2014 11:55:16 | +000000000 00:16:23.392 | +000000000 00:00:00.016618 |
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+Plan hash value: 2229717565
+Current datetime:                       21-FEB-2014 11:55:16
+Min ASH Sample Time:                    21-FEB-2014 02:54:18 (+000000000 09:00:57.742236000 elapsed since)
+Min ASH Sample Time for this SQL child: 21-FEB-2014 10:48:04 (+000000000 01:07:12.571279000 elapsed since)
+
+--------------------------------------------------------------------------------------------------------------------------------
+| ASHtime | Id  | Operation                              | Name                        | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------------------------------------------------------------
+|         |   0 | SELECT STATEMENT                       |                             |       |       | 36877 (100)|          |
+|         |   1 |  SORT ORDER BY                         |                             |     1 |   543 | 36877   (9)| 00:03:34 |
+|         |*  2 |   FILTER                               |                             |       |       |            |          |
+|         |   3 |    NESTED LOOPS OUTER                  |                             |     1 |   543 | 36876   (9)| 00:03:34 |
+|         |   4 |     VIEW                               |                             |     1 |   407 | 36873   (9)| 00:03:34 |
+|       5 |   5 |      HASH UNIQUE                       |                             |     1 |   246 | 36873   (9)| 00:03:34 |
+|         |   6 |       NESTED LOOPS                     |                             |       |       |            |          |
+|       1 |   7 |        NESTED LOOPS                    |                             |     1 |   246 | 36872   (9)| 00:03:34 |
+|         |   8 |         NESTED LOOPS OUTER             |                             |     1 |   158 | 36870   (9)| 00:03:34 |
+|         |   9 |          NESTED LOOPS ANTI             |                             |     1 |   131 | 36868   (9)| 00:03:34 |
+|       4 |  10 |           NESTED LOOPS                 |                             |     1 |   118 | 36868   (9)| 00:03:34 |
+|       1 |  11 |            NESTED LOOPS                |                             |  1933 |   194K| 22360   (2)| 00:02:10 |
+|         |  12 |             NESTED LOOPS ANTI          |                             |   689 | 37206 | 19601   (2)| 00:01:54 |
+|       6 |* 13 |              TABLE ACCESS FULL         | MEMBCOVR                    |   699 | 28659 | 19601   (2)| 00:01:54 |
+|         |* 14 |              INDEX UNIQUE SCAN         | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|       8 |  15 |             TABLE ACCESS BY INDEX ROWID| MEMBER                      |     3 |   147 |     4   (0)| 00:00:01 |
+|       3 |* 16 |              INDEX RANGE SCAN          | MEMBER_MEMBNO_LSTCHG_INDX   |     3 |       |     2   (0)| 00:00:01 |
+|       3 |* 17 |            VIEW PUSHED PREDICATE       |                             |     1 |    15 |     8  (25)| 00:00:01 |
+|       3 |* 18 |             FILTER                     |                             |       |       |            |          |
+|       1 |  19 |              SORT AGGREGATE            |                             |     1 |    17 |            |          |
+|       2 |  20 |               VIEW                     | VM_NWVW_1                   |     1 |    17 |     8  (25)| 00:00:01 |
+|       6 |* 21 |                FILTER                  |                             |       |       |            |          |
+|      71 |  22 |                 SORT GROUP BY          |                             |     1 |    69 |     8  (25)| 00:00:01 |
+|     845 |* 23 |                  HASH JOIN             |                             |     3 |   207 |     7  (15)| 00:00:01 |
+|      13 |* 24 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |   150 |     3   (0)| 00:00:01 |
+|       4 |* 25 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |    57 |     3   (0)| 00:00:01 |
+|         |* 26 |           INDEX UNIQUE SCAN            | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|       3 |  27 |          TABLE ACCESS BY INDEX ROWID   | MEMBER_IDENTIFICATION_OTHER |     1 |    27 |     2   (0)| 00:00:01 |
+|       5 |* 28 |           INDEX UNIQUE SCAN            | MBR_ID_OTH_PK_INDX          |     1 |       |     1   (0)| 00:00:01 |
+|         |* 29 |         INDEX UNIQUE SCAN              | DEMOGRAP_PK_INDX            |     1 |       |     1   (0)| 00:00:01 |
+|         |  30 |        TABLE ACCESS BY INDEX ROWID     | DEMOGRAP                    |     1 |    88 |     2   (0)| 00:00:01 |
+|         |* 31 |     TABLE ACCESS BY INDEX ROWID        | NAVITUS_CURRENT_ELIG_WRK    |     1 |   136 |     3   (0)| 00:00:01 |
+|         |* 32 |      INDEX RANGE SCAN                  | NAVITUS_CURR_ELIG_WRK_X1    |     1 |       |     2   (0)| 00:00:01 |
+--------------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - filter(("NAVITUS_CURRENT_ELIG_WRK"."FAMILY_ID" IS NULL OR
+              DECODE(TRIM("COA"."LAST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."LAST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."FIRST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."FIRST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."GENDER"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."GENDER"),0,1)=1 OR
+              DECODE("COA"."DATE_OF_BIRTH",TO_CHAR(INTERNAL_FUNCTION("NAVITUS_CURRENT_ELIG_WRK"."DATE_OF_BIRTH"),'YYYYMMDD')
+              ,0,1)=1 OR DECODE(UPPER(TRIM("COA"."ADDRESS1")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."ADDRESS_1")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."CITY")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."CITY")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."STATE")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."STATE_CD")),0,1)=1 OR
+              DECODE(TRIM("COA"."ZIP"),TRIM(REPLACE("NAVITUS_CURRENT_ELIG_WRK"."ZIP",'-','')),0,1)=1))
+  13 - filter(("MEMBCOVR"."EXPDAT">=TO_DATE(' 2010-01-01 00:00:00', 'syyyy-mm-dd hh24:mi:ss') AND
+              INSTR("MEMBCOVR"."MEMBNO",'-')=0 AND (UPPER("MEMBCOVR"."GRPNUM")='CAMC' OR UPPER("MEMBCOVR"."GRPNUM")='CAPE'
+              OR UPPER("MEMBCOVR"."GRPNUM")='CHP') AND "MEMBCOVR"."EFFDAT"<>"MEMBCOVR"."EXPDAT"))
+  14 - access("MEMBCOVR"."MEMBNO"="MEMBNO")
+  16 - access("MEMBCOVR"."MEMBNO"="MEMBER"."MEMBNO")
+  17 - filter("MEMBER"."MEMBER"="MAXMEMBER"."MAXMEMB")
+  18 - filter(COUNT(*)>0)
+  21 - filter("MEMBER"."LSTCHG"=MAX("LSTCHG"))
+  23 - access("MEMBER"."MEMBNO"="MEMBNO")
+  24 - access("MEMBER"."MEMBNO"="MEMBER"."MEMBNO")
+  25 - access("MEMBNO"="MEMBER"."MEMBNO")
+  26 - access("MEMBER"."MEMBNO"="MEMBNO")
+  28 - access("MEMBCOVR"."MEMBNO"="O"."MBR_NBR" AND "MEMBCOVR"."GRPNUM"="O"."GRP_NBR" AND
+              "O"."ID_TYPE_CD"='SI')
+  29 - access("DEMOGRAP"."MEMBNO"="MEMBCOVR"."MEMBNO")
+  31 - filter((INTERNAL_FUNCTION("CARRIER") AND "ACCOUNT_START_DATE" IS NOT NULL AND "GROUP_CD" IS NOT NULL
+              AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_END_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROUP_EXPD
+              T") AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_START_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROU
+              P_EFFDT") AND DECODE("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_ID","COA"."SUBGROUP_ID",0,1)=0))
+  32 - access("COA"."INDIVIDUAL_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_START_DATE" AND
+              "COA"."INDIVIDUAL_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_END_DATE" AND
+              "COA"."GROUP_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_START_DATE" AND
+              "COA"."GROUP_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_END_DATE")
+       filter("GROUP_END_DATE">"GROUP_START_DATE")
+
+Plan hash value: 2229717565
+
+--------------------------------------------------------------------------------------------------------------------------------
+| LastAct | Id  | Operation                              | Name                        | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------------------------------------------------------------
+|         |   0 | SELECT STATEMENT                       |                             |       |       | 36877 (100)|          |
+|         |   1 |  SORT ORDER BY                         |                             |     1 |   543 | 36877   (9)| 00:03:34 |
+|         |*  2 |   FILTER                               |                             |       |       |            |          |
+|         |   3 |    NESTED LOOPS OUTER                  |                             |     1 |   543 | 36876   (9)| 00:03:34 |
+|         |   4 |     VIEW                               |                             |     1 |   407 | 36873   (9)| 00:03:34 |
+|       1 |   5 |      HASH UNIQUE                       |                             |     1 |   246 | 36873   (9)| 00:03:34 |
+|       1 |   6 |       NESTED LOOPS                     |                             |       |       |            |          |
+|       1 |   7 |        NESTED LOOPS                    |                             |     1 |   246 | 36872   (9)| 00:03:34 |
+|       1 |   8 |         NESTED LOOPS OUTER             |                             |     1 |   158 | 36870   (9)| 00:03:34 |
+|       1 |   9 |          NESTED LOOPS ANTI             |                             |     1 |   131 | 36868   (9)| 00:03:34 |
+|       1 |  10 |           NESTED LOOPS                 |                             |     1 |   118 | 36868   (9)| 00:03:34 |
+|       1 |  11 |            NESTED LOOPS                |                             |  1933 |   194K| 22360   (2)| 00:02:10 |
+|       1 |  12 |             NESTED LOOPS ANTI          |                             |   689 | 37206 | 19601   (2)| 00:01:54 |
+|       1 |* 13 |              TABLE ACCESS FULL         | MEMBCOVR                    |   699 | 28659 | 19601   (2)| 00:01:54 |
+|     979 |* 14 |              INDEX UNIQUE SCAN         | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|       1 |  15 |             TABLE ACCESS BY INDEX ROWID| MEMBER                      |     3 |   147 |     4   (0)| 00:00:01 |
+|       1 |* 16 |              INDEX RANGE SCAN          | MEMBER_MEMBNO_LSTCHG_INDX   |     3 |       |     2   (0)| 00:00:01 |
+|       1 |* 17 |            VIEW PUSHED PREDICATE       |                             |     1 |    15 |     8  (25)| 00:00:01 |
+|       1 |* 18 |             FILTER                     |                             |       |       |            |          |
+|       1 |  19 |              SORT AGGREGATE            |                             |     1 |    17 |            |          |
+|       1 |  20 |               VIEW                     | VM_NWVW_1                   |     1 |    17 |     8  (25)| 00:00:01 |
+|       1 |* 21 |                FILTER                  |                             |       |       |            |          |
+|       1 |  22 |                 SORT GROUP BY          |                             |     1 |    69 |     8  (25)| 00:00:01 |
+|       1 |* 23 |                  HASH JOIN             |                             |     3 |   207 |     7  (15)| 00:00:01 |
+|       1 |* 24 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |   150 |     3   (0)| 00:00:01 |
+|       1 |* 25 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |    57 |     3   (0)| 00:00:01 |
+|         |* 26 |           INDEX UNIQUE SCAN            | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|       1 |  27 |          TABLE ACCESS BY INDEX ROWID   | MEMBER_IDENTIFICATION_OTHER |     1 |    27 |     2   (0)| 00:00:01 |
+|       1 |* 28 |           INDEX UNIQUE SCAN            | MBR_ID_OTH_PK_INDX          |     1 |       |     1   (0)| 00:00:01 |
+|       1 |* 29 |         INDEX UNIQUE SCAN              | DEMOGRAP_PK_INDX            |     1 |       |     1   (0)| 00:00:01 |
+|       1 |  30 |        TABLE ACCESS BY INDEX ROWID     | DEMOGRAP                    |     1 |    88 |     2   (0)| 00:00:01 |
+|         |* 31 |     TABLE ACCESS BY INDEX ROWID        | NAVITUS_CURRENT_ELIG_WRK    |     1 |   136 |     3   (0)| 00:00:01 |
+|         |* 32 |      INDEX RANGE SCAN                  | NAVITUS_CURR_ELIG_WRK_X1    |     1 |       |     2   (0)| 00:00:01 |
+--------------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - filter(("NAVITUS_CURRENT_ELIG_WRK"."FAMILY_ID" IS NULL OR
+              DECODE(TRIM("COA"."LAST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."LAST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."FIRST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."FIRST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."GENDER"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."GENDER"),0,1)=1 OR
+              DECODE("COA"."DATE_OF_BIRTH",TO_CHAR(INTERNAL_FUNCTION("NAVITUS_CURRENT_ELIG_WRK"."DATE_OF_BIRTH"),'YYYYMMDD')
+              ,0,1)=1 OR DECODE(UPPER(TRIM("COA"."ADDRESS1")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."ADDRESS_1")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."CITY")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."CITY")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."STATE")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."STATE_CD")),0,1)=1 OR
+              DECODE(TRIM("COA"."ZIP"),TRIM(REPLACE("NAVITUS_CURRENT_ELIG_WRK"."ZIP",'-','')),0,1)=1))
+  13 - filter(("MEMBCOVR"."EXPDAT">=TO_DATE(' 2010-01-01 00:00:00', 'syyyy-mm-dd hh24:mi:ss') AND
+              INSTR("MEMBCOVR"."MEMBNO",'-')=0 AND (UPPER("MEMBCOVR"."GRPNUM")='CAMC' OR UPPER("MEMBCOVR"."GRPNUM")='CAPE'
+              OR UPPER("MEMBCOVR"."GRPNUM")='CHP') AND "MEMBCOVR"."EFFDAT"<>"MEMBCOVR"."EXPDAT"))
+  14 - access("MEMBCOVR"."MEMBNO"="MEMBNO")
+  16 - access("MEMBCOVR"."MEMBNO"="MEMBER"."MEMBNO")
+  17 - filter("MEMBER"."MEMBER"="MAXMEMBER"."MAXMEMB")
+  18 - filter(COUNT(*)>0)
+  21 - filter("MEMBER"."LSTCHG"=MAX("LSTCHG"))
+  23 - access("MEMBER"."MEMBNO"="MEMBNO")
+  24 - access("MEMBER"."MEMBNO"="MEMBER"."MEMBNO")
+  25 - access("MEMBNO"="MEMBER"."MEMBNO")
+  26 - access("MEMBER"."MEMBNO"="MEMBNO")
+  28 - access("MEMBCOVR"."MEMBNO"="O"."MBR_NBR" AND "MEMBCOVR"."GRPNUM"="O"."GRP_NBR" AND
+              "O"."ID_TYPE_CD"='SI')
+  29 - access("DEMOGRAP"."MEMBNO"="MEMBCOVR"."MEMBNO")
+  31 - filter((INTERNAL_FUNCTION("CARRIER") AND "ACCOUNT_START_DATE" IS NOT NULL AND "GROUP_CD" IS NOT NULL
+              AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_END_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROUP_EXPD
+              T") AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_START_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROU
+              P_EFFDT") AND DECODE("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_ID","COA"."SUBGROUP_ID",0,1)=0))
+  32 - access("COA"."INDIVIDUAL_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_START_DATE" AND
+              "COA"."INDIVIDUAL_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_END_DATE" AND
+              "COA"."GROUP_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_START_DATE" AND
+              "COA"."GROUP_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_END_DATE")
+       filter("GROUP_END_DATE">"GROUP_START_DATE")
+
+Plan hash value: 2229717565
+
+--------------------------------------------------------------------------------------------------------------------------------
+| RowsRtn | Id  | Operation                              | Name                        | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------------------------------------------------------------
+|         |   0 | SELECT STATEMENT                       |                             |       |       | 36877 (100)|          |
+|         |   1 |  SORT ORDER BY                         |                             |     1 |   543 | 36877   (9)| 00:03:34 |
+|         |*  2 |   FILTER                               |                             |       |       |            |          |
+|         |   3 |    NESTED LOOPS OUTER                  |                             |     1 |   543 | 36876   (9)| 00:03:34 |
+|         |   4 |     VIEW                               |                             |     1 |   407 | 36873   (9)| 00:03:34 |
+|         |   5 |      HASH UNIQUE                       |                             |     1 |   246 | 36873   (9)| 00:03:34 |
+|  77.88k |   6 |       NESTED LOOPS                     |                             |       |       |            |          |
+|  77.88k |   7 |        NESTED LOOPS                    |                             |     1 |   246 | 36872   (9)| 00:03:34 |
+|  77.88k |   8 |         NESTED LOOPS OUTER             |                             |     1 |   158 | 36870   (9)| 00:03:34 |
+|  77.88k |   9 |          NESTED LOOPS ANTI             |                             |     1 |   131 | 36868   (9)| 00:03:34 |
+|  77.88k |  10 |           NESTED LOOPS                 |                             |     1 |   118 | 36868   (9)| 00:03:34 |
+| 404.83k |  11 |            NESTED LOOPS                |                             |  1933 |   194K| 22360   (2)| 00:02:10 |
+|  77.88k |  12 |             NESTED LOOPS ANTI          |                             |   689 | 37206 | 19601   (2)| 00:01:54 |
+|  77.89k |* 13 |              TABLE ACCESS FULL         | MEMBCOVR                    |   699 | 28659 | 19601   (2)| 00:01:54 |
+|       2 |* 14 |              INDEX UNIQUE SCAN         | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+| 404.83k |  15 |             TABLE ACCESS BY INDEX ROWID| MEMBER                      |     3 |   147 |     4   (0)| 00:00:01 |
+| 404.83k |* 16 |              INDEX RANGE SCAN          | MEMBER_MEMBNO_LSTCHG_INDX   |     3 |       |     2   (0)| 00:00:01 |
+|  77.88k |* 17 |            VIEW PUSHED PREDICATE       |                             |     1 |    15 |     8  (25)| 00:00:01 |
+| 404.83k |* 18 |             FILTER                     |                             |       |       |            |          |
+| 404.83k |  19 |              SORT AGGREGATE            |                             |     1 |    17 |            |          |
+| 448.57k |  20 |               VIEW                     | VM_NWVW_1                   |     1 |    17 |     8  (25)| 00:00:01 |
+| 448.57k |* 21 |                FILTER                  |                             |       |       |            |          |
+|   3.04m |  22 |                 SORT GROUP BY          |                             |     1 |    69 |     8  (25)| 00:00:01 |
+|  28.97m |* 23 |                  HASH JOIN             |                             |     3 |   207 |     7  (15)| 00:00:01 |
+|   3.04m |* 24 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |   150 |     3   (0)| 00:00:01 |
+|   3.04m |* 25 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |    57 |     3   (0)| 00:00:01 |
+|         |* 26 |           INDEX UNIQUE SCAN            | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|  77.82k |  27 |          TABLE ACCESS BY INDEX ROWID   | MEMBER_IDENTIFICATION_OTHER |     1 |    27 |     2   (0)| 00:00:01 |
+|  77.82k |* 28 |           INDEX UNIQUE SCAN            | MBR_ID_OTH_PK_INDX          |     1 |       |     1   (0)| 00:00:01 |
+|  77.88k |* 29 |         INDEX UNIQUE SCAN              | DEMOGRAP_PK_INDX            |     1 |       |     1   (0)| 00:00:01 |
+|  77.88k |  30 |        TABLE ACCESS BY INDEX ROWID     | DEMOGRAP                    |     1 |    88 |     2   (0)| 00:00:01 |
+|         |* 31 |     TABLE ACCESS BY INDEX ROWID        | NAVITUS_CURRENT_ELIG_WRK    |     1 |   136 |     3   (0)| 00:00:01 |
+|         |* 32 |      INDEX RANGE SCAN                  | NAVITUS_CURR_ELIG_WRK_X1    |     1 |       |     2   (0)| 00:00:01 |
+--------------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - filter(("NAVITUS_CURRENT_ELIG_WRK"."FAMILY_ID" IS NULL OR
+              DECODE(TRIM("COA"."LAST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."LAST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."FIRST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."FIRST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."GENDER"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."GENDER"),0,1)=1 OR
+              DECODE("COA"."DATE_OF_BIRTH",TO_CHAR(INTERNAL_FUNCTION("NAVITUS_CURRENT_ELIG_WRK"."DATE_OF_BIRTH"),'YYYYMMDD')
+              ,0,1)=1 OR DECODE(UPPER(TRIM("COA"."ADDRESS1")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."ADDRESS_1")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."CITY")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."CITY")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."STATE")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."STATE_CD")),0,1)=1 OR
+              DECODE(TRIM("COA"."ZIP"),TRIM(REPLACE("NAVITUS_CURRENT_ELIG_WRK"."ZIP",'-','')),0,1)=1))
+  13 - filter(("MEMBCOVR"."EXPDAT">=TO_DATE(' 2010-01-01 00:00:00', 'syyyy-mm-dd hh24:mi:ss') AND
+              INSTR("MEMBCOVR"."MEMBNO",'-')=0 AND (UPPER("MEMBCOVR"."GRPNUM")='CAMC' OR UPPER("MEMBCOVR"."GRPNUM")='CAPE'
+              OR UPPER("MEMBCOVR"."GRPNUM")='CHP') AND "MEMBCOVR"."EFFDAT"<>"MEMBCOVR"."EXPDAT"))
+  14 - access("MEMBCOVR"."MEMBNO"="MEMBNO")
+  16 - access("MEMBCOVR"."MEMBNO"="MEMBER"."MEMBNO")
+  17 - filter("MEMBER"."MEMBER"="MAXMEMBER"."MAXMEMB")
+  18 - filter(COUNT(*)>0)
+  21 - filter("MEMBER"."LSTCHG"=MAX("LSTCHG"))
+  23 - access("MEMBER"."MEMBNO"="MEMBNO")
+  24 - access("MEMBER"."MEMBNO"="MEMBER"."MEMBNO")
+  25 - access("MEMBNO"="MEMBER"."MEMBNO")
+  26 - access("MEMBER"."MEMBNO"="MEMBNO")
+  28 - access("MEMBCOVR"."MEMBNO"="O"."MBR_NBR" AND "MEMBCOVR"."GRPNUM"="O"."GRP_NBR" AND
+              "O"."ID_TYPE_CD"='SI')
+  29 - access("DEMOGRAP"."MEMBNO"="MEMBCOVR"."MEMBNO")
+  31 - filter((INTERNAL_FUNCTION("CARRIER") AND "ACCOUNT_START_DATE" IS NOT NULL AND "GROUP_CD" IS NOT NULL
+              AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_END_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROUP_EXPD
+              T") AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_START_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROU
+              P_EFFDT") AND DECODE("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_ID","COA"."SUBGROUP_ID",0,1)=0))
+  32 - access("COA"."INDIVIDUAL_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_START_DATE" AND
+              "COA"."INDIVIDUAL_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_END_DATE" AND
+              "COA"."GROUP_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_START_DATE" AND
+              "COA"."GROUP_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_END_DATE")
+       filter("GROUP_END_DATE">"GROUP_START_DATE")
+
+Plan hash value: 2229717565
+
+--------------------------------------------------------------------------------------------------------------------------------
+| PhyRead | Id  | Operation                              | Name                        | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------------------------------------------------------------
+|         |   0 | SELECT STATEMENT                       |                             |       |       | 36877 (100)|          |
+|         |   1 |  SORT ORDER BY                         |                             |     1 |   543 | 36877   (9)| 00:03:34 |
+|         |*  2 |   FILTER                               |                             |       |       |            |          |
+|         |   3 |    NESTED LOOPS OUTER                  |                             |     1 |   543 | 36876   (9)| 00:03:34 |
+|         |   4 |     VIEW                               |                             |     1 |   407 | 36873   (9)| 00:03:34 |
+|         |   5 |      HASH UNIQUE                       |                             |     1 |   246 | 36873   (9)| 00:03:34 |
+|         |   6 |       NESTED LOOPS                     |                             |       |       |            |          |
+|         |   7 |        NESTED LOOPS                    |                             |     1 |   246 | 36872   (9)| 00:03:34 |
+|         |   8 |         NESTED LOOPS OUTER             |                             |     1 |   158 | 36870   (9)| 00:03:34 |
+|         |   9 |          NESTED LOOPS ANTI             |                             |     1 |   131 | 36868   (9)| 00:03:34 |
+|         |  10 |           NESTED LOOPS                 |                             |     1 |   118 | 36868   (9)| 00:03:34 |
+|         |  11 |            NESTED LOOPS                |                             |  1933 |   194K| 22360   (2)| 00:02:10 |
+|         |  12 |             NESTED LOOPS ANTI          |                             |   689 | 37206 | 19601   (2)| 00:01:54 |
+| 257.75M |* 13 |              TABLE ACCESS FULL         | MEMBCOVR                    |   699 | 28659 | 19601   (2)| 00:01:54 |
+|         |* 14 |              INDEX UNIQUE SCAN         | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|         |  15 |             TABLE ACCESS BY INDEX ROWID| MEMBER                      |     3 |   147 |     4   (0)| 00:00:01 |
+|         |* 16 |              INDEX RANGE SCAN          | MEMBER_MEMBNO_LSTCHG_INDX   |     3 |       |     2   (0)| 00:00:01 |
+|         |* 17 |            VIEW PUSHED PREDICATE       |                             |     1 |    15 |     8  (25)| 00:00:01 |
+|         |* 18 |             FILTER                     |                             |       |       |            |          |
+|         |  19 |              SORT AGGREGATE            |                             |     1 |    17 |            |          |
+|         |  20 |               VIEW                     | VM_NWVW_1                   |     1 |    17 |     8  (25)| 00:00:01 |
+|         |* 21 |                FILTER                  |                             |       |       |            |          |
+|         |  22 |                 SORT GROUP BY          |                             |     1 |    69 |     8  (25)| 00:00:01 |
+|         |* 23 |                  HASH JOIN             |                             |     3 |   207 |     7  (15)| 00:00:01 |
+|         |* 24 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |   150 |     3   (0)| 00:00:01 |
+|         |* 25 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |    57 |     3   (0)| 00:00:01 |
+|         |* 26 |           INDEX UNIQUE SCAN            | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|         |  27 |          TABLE ACCESS BY INDEX ROWID   | MEMBER_IDENTIFICATION_OTHER |     1 |    27 |     2   (0)| 00:00:01 |
+|         |* 28 |           INDEX UNIQUE SCAN            | MBR_ID_OTH_PK_INDX          |     1 |       |     1   (0)| 00:00:01 |
+|         |* 29 |         INDEX UNIQUE SCAN              | DEMOGRAP_PK_INDX            |     1 |       |     1   (0)| 00:00:01 |
+|         |  30 |        TABLE ACCESS BY INDEX ROWID     | DEMOGRAP                    |     1 |    88 |     2   (0)| 00:00:01 |
+|         |* 31 |     TABLE ACCESS BY INDEX ROWID        | NAVITUS_CURRENT_ELIG_WRK    |     1 |   136 |     3   (0)| 00:00:01 |
+|         |* 32 |      INDEX RANGE SCAN                  | NAVITUS_CURR_ELIG_WRK_X1    |     1 |       |     2   (0)| 00:00:01 |
+--------------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - filter(("NAVITUS_CURRENT_ELIG_WRK"."FAMILY_ID" IS NULL OR
+              DECODE(TRIM("COA"."LAST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."LAST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."FIRST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."FIRST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."GENDER"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."GENDER"),0,1)=1 OR
+              DECODE("COA"."DATE_OF_BIRTH",TO_CHAR(INTERNAL_FUNCTION("NAVITUS_CURRENT_ELIG_WRK"."DATE_OF_BIRTH"),'YYYYMMDD')
+              ,0,1)=1 OR DECODE(UPPER(TRIM("COA"."ADDRESS1")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."ADDRESS_1")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."CITY")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."CITY")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."STATE")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."STATE_CD")),0,1)=1 OR
+              DECODE(TRIM("COA"."ZIP"),TRIM(REPLACE("NAVITUS_CURRENT_ELIG_WRK"."ZIP",'-','')),0,1)=1))
+  13 - filter(("MEMBCOVR"."EXPDAT">=TO_DATE(' 2010-01-01 00:00:00', 'syyyy-mm-dd hh24:mi:ss') AND
+              INSTR("MEMBCOVR"."MEMBNO",'-')=0 AND (UPPER("MEMBCOVR"."GRPNUM")='CAMC' OR UPPER("MEMBCOVR"."GRPNUM")='CAPE'
+              OR UPPER("MEMBCOVR"."GRPNUM")='CHP') AND "MEMBCOVR"."EFFDAT"<>"MEMBCOVR"."EXPDAT"))
+  14 - access("MEMBCOVR"."MEMBNO"="MEMBNO")
+  16 - access("MEMBCOVR"."MEMBNO"="MEMBER"."MEMBNO")
+  17 - filter("MEMBER"."MEMBER"="MAXMEMBER"."MAXMEMB")
+  18 - filter(COUNT(*)>0)
+  21 - filter("MEMBER"."LSTCHG"=MAX("LSTCHG"))
+  23 - access("MEMBER"."MEMBNO"="MEMBNO")
+  24 - access("MEMBER"."MEMBNO"="MEMBER"."MEMBNO")
+  25 - access("MEMBNO"="MEMBER"."MEMBNO")
+  26 - access("MEMBER"."MEMBNO"="MEMBNO")
+  28 - access("MEMBCOVR"."MEMBNO"="O"."MBR_NBR" AND "MEMBCOVR"."GRPNUM"="O"."GRP_NBR" AND
+              "O"."ID_TYPE_CD"='SI')
+  29 - access("DEMOGRAP"."MEMBNO"="MEMBCOVR"."MEMBNO")
+  31 - filter((INTERNAL_FUNCTION("CARRIER") AND "ACCOUNT_START_DATE" IS NOT NULL AND "GROUP_CD" IS NOT NULL
+              AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_END_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROUP_EXPD
+              T") AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_START_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROU
+              P_EFFDT") AND DECODE("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_ID","COA"."SUBGROUP_ID",0,1)=0))
+  32 - access("COA"."INDIVIDUAL_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_START_DATE" AND
+              "COA"."INDIVIDUAL_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_END_DATE" AND
+              "COA"."GROUP_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_START_DATE" AND
+              "COA"."GROUP_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_END_DATE")
+       filter("GROUP_END_DATE">"GROUP_START_DATE")
+
+Plan hash value: 2229717565
+
+--------------------------------------------------------------------------------------------------------------------------------
+| PhyWrt  | Id  | Operation                              | Name                        | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------------------------------------------------------------
+|         |   0 | SELECT STATEMENT                       |                             |       |       | 36877 (100)|          |
+|         |   1 |  SORT ORDER BY                         |                             |     1 |   543 | 36877   (9)| 00:03:34 |
+|         |*  2 |   FILTER                               |                             |       |       |            |          |
+|         |   3 |    NESTED LOOPS OUTER                  |                             |     1 |   543 | 36876   (9)| 00:03:34 |
+|         |   4 |     VIEW                               |                             |     1 |   407 | 36873   (9)| 00:03:34 |
+|  29.42M |   5 |      HASH UNIQUE                       |                             |     1 |   246 | 36873   (9)| 00:03:34 |
+|         |   6 |       NESTED LOOPS                     |                             |       |       |            |          |
+|         |   7 |        NESTED LOOPS                    |                             |     1 |   246 | 36872   (9)| 00:03:34 |
+|         |   8 |         NESTED LOOPS OUTER             |                             |     1 |   158 | 36870   (9)| 00:03:34 |
+|         |   9 |          NESTED LOOPS ANTI             |                             |     1 |   131 | 36868   (9)| 00:03:34 |
+|         |  10 |           NESTED LOOPS                 |                             |     1 |   118 | 36868   (9)| 00:03:34 |
+|         |  11 |            NESTED LOOPS                |                             |  1933 |   194K| 22360   (2)| 00:02:10 |
+|         |  12 |             NESTED LOOPS ANTI          |                             |   689 | 37206 | 19601   (2)| 00:01:54 |
+|         |* 13 |              TABLE ACCESS FULL         | MEMBCOVR                    |   699 | 28659 | 19601   (2)| 00:01:54 |
+|         |* 14 |              INDEX UNIQUE SCAN         | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|         |  15 |             TABLE ACCESS BY INDEX ROWID| MEMBER                      |     3 |   147 |     4   (0)| 00:00:01 |
+|         |* 16 |              INDEX RANGE SCAN          | MEMBER_MEMBNO_LSTCHG_INDX   |     3 |       |     2   (0)| 00:00:01 |
+|         |* 17 |            VIEW PUSHED PREDICATE       |                             |     1 |    15 |     8  (25)| 00:00:01 |
+|         |* 18 |             FILTER                     |                             |       |       |            |          |
+|         |  19 |              SORT AGGREGATE            |                             |     1 |    17 |            |          |
+|         |  20 |               VIEW                     | VM_NWVW_1                   |     1 |    17 |     8  (25)| 00:00:01 |
+|         |* 21 |                FILTER                  |                             |       |       |            |          |
+|         |  22 |                 SORT GROUP BY          |                             |     1 |    69 |     8  (25)| 00:00:01 |
+|         |* 23 |                  HASH JOIN             |                             |     3 |   207 |     7  (15)| 00:00:01 |
+|         |* 24 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |   150 |     3   (0)| 00:00:01 |
+|         |* 25 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |    57 |     3   (0)| 00:00:01 |
+|         |* 26 |           INDEX UNIQUE SCAN            | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|         |  27 |          TABLE ACCESS BY INDEX ROWID   | MEMBER_IDENTIFICATION_OTHER |     1 |    27 |     2   (0)| 00:00:01 |
+|         |* 28 |           INDEX UNIQUE SCAN            | MBR_ID_OTH_PK_INDX          |     1 |       |     1   (0)| 00:00:01 |
+|         |* 29 |         INDEX UNIQUE SCAN              | DEMOGRAP_PK_INDX            |     1 |       |     1   (0)| 00:00:01 |
+|         |  30 |        TABLE ACCESS BY INDEX ROWID     | DEMOGRAP                    |     1 |    88 |     2   (0)| 00:00:01 |
+|         |* 31 |     TABLE ACCESS BY INDEX ROWID        | NAVITUS_CURRENT_ELIG_WRK    |     1 |   136 |     3   (0)| 00:00:01 |
+|         |* 32 |      INDEX RANGE SCAN                  | NAVITUS_CURR_ELIG_WRK_X1    |     1 |       |     2   (0)| 00:00:01 |
+--------------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - filter(("NAVITUS_CURRENT_ELIG_WRK"."FAMILY_ID" IS NULL OR
+              DECODE(TRIM("COA"."LAST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."LAST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."FIRST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."FIRST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."GENDER"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."GENDER"),0,1)=1 OR
+              DECODE("COA"."DATE_OF_BIRTH",TO_CHAR(INTERNAL_FUNCTION("NAVITUS_CURRENT_ELIG_WRK"."DATE_OF_BIRTH"),'YYYYMMDD')
+              ,0,1)=1 OR DECODE(UPPER(TRIM("COA"."ADDRESS1")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."ADDRESS_1")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."CITY")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."CITY")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."STATE")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."STATE_CD")),0,1)=1 OR
+              DECODE(TRIM("COA"."ZIP"),TRIM(REPLACE("NAVITUS_CURRENT_ELIG_WRK"."ZIP",'-','')),0,1)=1))
+  13 - filter(("MEMBCOVR"."EXPDAT">=TO_DATE(' 2010-01-01 00:00:00', 'syyyy-mm-dd hh24:mi:ss') AND
+              INSTR("MEMBCOVR"."MEMBNO",'-')=0 AND (UPPER("MEMBCOVR"."GRPNUM")='CAMC' OR UPPER("MEMBCOVR"."GRPNUM")='CAPE'
+              OR UPPER("MEMBCOVR"."GRPNUM")='CHP') AND "MEMBCOVR"."EFFDAT"<>"MEMBCOVR"."EXPDAT"))
+  14 - access("MEMBCOVR"."MEMBNO"="MEMBNO")
+  16 - access("MEMBCOVR"."MEMBNO"="MEMBER"."MEMBNO")
+  17 - filter("MEMBER"."MEMBER"="MAXMEMBER"."MAXMEMB")
+  18 - filter(COUNT(*)>0)
+  21 - filter("MEMBER"."LSTCHG"=MAX("LSTCHG"))
+  23 - access("MEMBER"."MEMBNO"="MEMBNO")
+  24 - access("MEMBER"."MEMBNO"="MEMBER"."MEMBNO")
+  25 - access("MEMBNO"="MEMBER"."MEMBNO")
+  26 - access("MEMBER"."MEMBNO"="MEMBNO")
+  28 - access("MEMBCOVR"."MEMBNO"="O"."MBR_NBR" AND "MEMBCOVR"."GRPNUM"="O"."GRP_NBR" AND
+              "O"."ID_TYPE_CD"='SI')
+  29 - access("DEMOGRAP"."MEMBNO"="MEMBCOVR"."MEMBNO")
+  31 - filter((INTERNAL_FUNCTION("CARRIER") AND "ACCOUNT_START_DATE" IS NOT NULL AND "GROUP_CD" IS NOT NULL
+              AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_END_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROUP_EXPD
+              T") AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_START_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROU
+              P_EFFDT") AND DECODE("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_ID","COA"."SUBGROUP_ID",0,1)=0))
+  32 - access("COA"."INDIVIDUAL_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_START_DATE" AND
+              "COA"."INDIVIDUAL_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_END_DATE" AND
+              "COA"."GROUP_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_START_DATE" AND
+              "COA"."GROUP_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_END_DATE")
+       filter("GROUP_END_DATE">"GROUP_START_DATE")
+
+Plan hash value: 2229717565
+
+--------------------------------------------------------------------------------------------------------------------------------
+| PGA Mem | Id  | Operation                              | Name                        | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------------------------------------------------------------
+|         |   0 | SELECT STATEMENT                       |                             |       |       | 36877 (100)|          |
+|         |   1 |  SORT ORDER BY                         |                             |     1 |   543 | 36877   (9)| 00:03:34 |
+|         |*  2 |   FILTER                               |                             |       |       |            |          |
+|         |   3 |    NESTED LOOPS OUTER                  |                             |     1 |   543 | 36876   (9)| 00:03:34 |
+|         |   4 |     VIEW                               |                             |     1 |   407 | 36873   (9)| 00:03:34 |
+|    3.1M |   5 |      HASH UNIQUE                       |                             |     1 |   246 | 36873   (9)| 00:03:34 |
+|         |   6 |       NESTED LOOPS                     |                             |       |       |            |          |
+|         |   7 |        NESTED LOOPS                    |                             |     1 |   246 | 36872   (9)| 00:03:34 |
+|         |   8 |         NESTED LOOPS OUTER             |                             |     1 |   158 | 36870   (9)| 00:03:34 |
+|         |   9 |          NESTED LOOPS ANTI             |                             |     1 |   131 | 36868   (9)| 00:03:34 |
+|         |  10 |           NESTED LOOPS                 |                             |     1 |   118 | 36868   (9)| 00:03:34 |
+|         |  11 |            NESTED LOOPS                |                             |  1933 |   194K| 22360   (2)| 00:02:10 |
+|         |  12 |             NESTED LOOPS ANTI          |                             |   689 | 37206 | 19601   (2)| 00:01:54 |
+|         |* 13 |              TABLE ACCESS FULL         | MEMBCOVR                    |   699 | 28659 | 19601   (2)| 00:01:54 |
+|         |* 14 |              INDEX UNIQUE SCAN         | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|         |  15 |             TABLE ACCESS BY INDEX ROWID| MEMBER                      |     3 |   147 |     4   (0)| 00:00:01 |
+|         |* 16 |              INDEX RANGE SCAN          | MEMBER_MEMBNO_LSTCHG_INDX   |     3 |       |     2   (0)| 00:00:01 |
+|         |* 17 |            VIEW PUSHED PREDICATE       |                             |     1 |    15 |     8  (25)| 00:00:01 |
+|         |* 18 |             FILTER                     |                             |       |       |            |          |
+|         |  19 |              SORT AGGREGATE            |                             |     1 |    17 |            |          |
+|         |  20 |               VIEW                     | VM_NWVW_1                   |     1 |    17 |     8  (25)| 00:00:01 |
+|         |* 21 |                FILTER                  |                             |       |       |            |          |
+|         |  22 |                 SORT GROUP BY          |                             |     1 |    69 |     8  (25)| 00:00:01 |
+|         |* 23 |                  HASH JOIN             |                             |     3 |   207 |     7  (15)| 00:00:01 |
+|         |* 24 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |   150 |     3   (0)| 00:00:01 |
+|         |* 25 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |    57 |     3   (0)| 00:00:01 |
+|         |* 26 |           INDEX UNIQUE SCAN            | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|         |  27 |          TABLE ACCESS BY INDEX ROWID   | MEMBER_IDENTIFICATION_OTHER |     1 |    27 |     2   (0)| 00:00:01 |
+|         |* 28 |           INDEX UNIQUE SCAN            | MBR_ID_OTH_PK_INDX          |     1 |       |     1   (0)| 00:00:01 |
+|         |* 29 |         INDEX UNIQUE SCAN              | DEMOGRAP_PK_INDX            |     1 |       |     1   (0)| 00:00:01 |
+|         |  30 |        TABLE ACCESS BY INDEX ROWID     | DEMOGRAP                    |     1 |    88 |     2   (0)| 00:00:01 |
+|         |* 31 |     TABLE ACCESS BY INDEX ROWID        | NAVITUS_CURRENT_ELIG_WRK    |     1 |   136 |     3   (0)| 00:00:01 |
+|         |* 32 |      INDEX RANGE SCAN                  | NAVITUS_CURR_ELIG_WRK_X1    |     1 |       |     2   (0)| 00:00:01 |
+--------------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - filter(("NAVITUS_CURRENT_ELIG_WRK"."FAMILY_ID" IS NULL OR
+              DECODE(TRIM("COA"."LAST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."LAST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."FIRST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."FIRST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."GENDER"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."GENDER"),0,1)=1 OR
+              DECODE("COA"."DATE_OF_BIRTH",TO_CHAR(INTERNAL_FUNCTION("NAVITUS_CURRENT_ELIG_WRK"."DATE_OF_BIRTH"),'YYYYMMDD')
+              ,0,1)=1 OR DECODE(UPPER(TRIM("COA"."ADDRESS1")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."ADDRESS_1")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."CITY")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."CITY")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."STATE")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."STATE_CD")),0,1)=1 OR
+              DECODE(TRIM("COA"."ZIP"),TRIM(REPLACE("NAVITUS_CURRENT_ELIG_WRK"."ZIP",'-','')),0,1)=1))
+  13 - filter(("MEMBCOVR"."EXPDAT">=TO_DATE(' 2010-01-01 00:00:00', 'syyyy-mm-dd hh24:mi:ss') AND
+              INSTR("MEMBCOVR"."MEMBNO",'-')=0 AND (UPPER("MEMBCOVR"."GRPNUM")='CAMC' OR UPPER("MEMBCOVR"."GRPNUM")='CAPE'
+              OR UPPER("MEMBCOVR"."GRPNUM")='CHP') AND "MEMBCOVR"."EFFDAT"<>"MEMBCOVR"."EXPDAT"))
+  14 - access("MEMBCOVR"."MEMBNO"="MEMBNO")
+  16 - access("MEMBCOVR"."MEMBNO"="MEMBER"."MEMBNO")
+  17 - filter("MEMBER"."MEMBER"="MAXMEMBER"."MAXMEMB")
+  18 - filter(COUNT(*)>0)
+  21 - filter("MEMBER"."LSTCHG"=MAX("LSTCHG"))
+  23 - access("MEMBER"."MEMBNO"="MEMBNO")
+  24 - access("MEMBER"."MEMBNO"="MEMBER"."MEMBNO")
+  25 - access("MEMBNO"="MEMBER"."MEMBNO")
+  26 - access("MEMBER"."MEMBNO"="MEMBNO")
+  28 - access("MEMBCOVR"."MEMBNO"="O"."MBR_NBR" AND "MEMBCOVR"."GRPNUM"="O"."GRP_NBR" AND
+              "O"."ID_TYPE_CD"='SI')
+  29 - access("DEMOGRAP"."MEMBNO"="MEMBCOVR"."MEMBNO")
+  31 - filter((INTERNAL_FUNCTION("CARRIER") AND "ACCOUNT_START_DATE" IS NOT NULL AND "GROUP_CD" IS NOT NULL
+              AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_END_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROUP_EXPD
+              T") AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_START_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROU
+              P_EFFDT") AND DECODE("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_ID","COA"."SUBGROUP_ID",0,1)=0))
+  32 - access("COA"."INDIVIDUAL_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_START_DATE" AND
+              "COA"."INDIVIDUAL_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_END_DATE" AND
+              "COA"."GROUP_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_START_DATE" AND
+              "COA"."GROUP_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_END_DATE")
+       filter("GROUP_END_DATE">"GROUP_START_DATE")
+
+Plan hash value: 2229717565
+
+--------------------------------------------------------------------------------------------------------------------------------
+| Pga2Tmp | Id  | Operation                              | Name                        | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------------------------------------------------------------
+|         |   0 | SELECT STATEMENT                       |                             |       |       | 36877 (100)|          |
+|         |   1 |  SORT ORDER BY                         |                             |     1 |   543 | 36877   (9)| 00:03:34 |
+|         |*  2 |   FILTER                               |                             |       |       |            |          |
+|         |   3 |    NESTED LOOPS OUTER                  |                             |     1 |   543 | 36876   (9)| 00:03:34 |
+|         |   4 |     VIEW                               |                             |     1 |   407 | 36873   (9)| 00:03:34 |
+|     31M |   5 |      HASH UNIQUE                       |                             |     1 |   246 | 36873   (9)| 00:03:34 |
+|         |   6 |       NESTED LOOPS                     |                             |       |       |            |          |
+|         |   7 |        NESTED LOOPS                    |                             |     1 |   246 | 36872   (9)| 00:03:34 |
+|         |   8 |         NESTED LOOPS OUTER             |                             |     1 |   158 | 36870   (9)| 00:03:34 |
+|         |   9 |          NESTED LOOPS ANTI             |                             |     1 |   131 | 36868   (9)| 00:03:34 |
+|         |  10 |           NESTED LOOPS                 |                             |     1 |   118 | 36868   (9)| 00:03:34 |
+|         |  11 |            NESTED LOOPS                |                             |  1933 |   194K| 22360   (2)| 00:02:10 |
+|         |  12 |             NESTED LOOPS ANTI          |                             |   689 | 37206 | 19601   (2)| 00:01:54 |
+|         |* 13 |              TABLE ACCESS FULL         | MEMBCOVR                    |   699 | 28659 | 19601   (2)| 00:01:54 |
+|         |* 14 |              INDEX UNIQUE SCAN         | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|         |  15 |             TABLE ACCESS BY INDEX ROWID| MEMBER                      |     3 |   147 |     4   (0)| 00:00:01 |
+|         |* 16 |              INDEX RANGE SCAN          | MEMBER_MEMBNO_LSTCHG_INDX   |     3 |       |     2   (0)| 00:00:01 |
+|         |* 17 |            VIEW PUSHED PREDICATE       |                             |     1 |    15 |     8  (25)| 00:00:01 |
+|         |* 18 |             FILTER                     |                             |       |       |            |          |
+|         |  19 |              SORT AGGREGATE            |                             |     1 |    17 |            |          |
+|         |  20 |               VIEW                     | VM_NWVW_1                   |     1 |    17 |     8  (25)| 00:00:01 |
+|         |* 21 |                FILTER                  |                             |       |       |            |          |
+|         |  22 |                 SORT GROUP BY          |                             |     1 |    69 |     8  (25)| 00:00:01 |
+|         |* 23 |                  HASH JOIN             |                             |     3 |   207 |     7  (15)| 00:00:01 |
+|         |* 24 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |   150 |     3   (0)| 00:00:01 |
+|         |* 25 |                   INDEX RANGE SCAN     | MEMBER_EDW_CURR_MBR_INDX    |     3 |    57 |     3   (0)| 00:00:01 |
+|         |* 26 |           INDEX UNIQUE SCAN            | DEFAULT_MEMBER_PK           |     1 |    13 |     0   (0)|          |
+|         |  27 |          TABLE ACCESS BY INDEX ROWID   | MEMBER_IDENTIFICATION_OTHER |     1 |    27 |     2   (0)| 00:00:01 |
+|         |* 28 |           INDEX UNIQUE SCAN            | MBR_ID_OTH_PK_INDX          |     1 |       |     1   (0)| 00:00:01 |
+|         |* 29 |         INDEX UNIQUE SCAN              | DEMOGRAP_PK_INDX            |     1 |       |     1   (0)| 00:00:01 |
+|         |  30 |        TABLE ACCESS BY INDEX ROWID     | DEMOGRAP                    |     1 |    88 |     2   (0)| 00:00:01 |
+|         |* 31 |     TABLE ACCESS BY INDEX ROWID        | NAVITUS_CURRENT_ELIG_WRK    |     1 |   136 |     3   (0)| 00:00:01 |
+|         |* 32 |      INDEX RANGE SCAN                  | NAVITUS_CURR_ELIG_WRK_X1    |     1 |       |     2   (0)| 00:00:01 |
+--------------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - filter(("NAVITUS_CURRENT_ELIG_WRK"."FAMILY_ID" IS NULL OR
+              DECODE(TRIM("COA"."LAST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."LAST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."FIRST_NAME"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."FIRST_NAME"),0,1)=1 OR
+              DECODE(TRIM("COA"."GENDER"),TRIM("NAVITUS_CURRENT_ELIG_WRK"."GENDER"),0,1)=1 OR
+              DECODE("COA"."DATE_OF_BIRTH",TO_CHAR(INTERNAL_FUNCTION("NAVITUS_CURRENT_ELIG_WRK"."DATE_OF_BIRTH"),'YYYYMMDD')
+              ,0,1)=1 OR DECODE(UPPER(TRIM("COA"."ADDRESS1")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."ADDRESS_1")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."CITY")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."CITY")),0,1)=1 OR
+              DECODE(UPPER(TRIM("COA"."STATE")),UPPER(TRIM("NAVITUS_CURRENT_ELIG_WRK"."STATE_CD")),0,1)=1 OR
+              DECODE(TRIM("COA"."ZIP"),TRIM(REPLACE("NAVITUS_CURRENT_ELIG_WRK"."ZIP",'-','')),0,1)=1))
+  13 - filter(("MEMBCOVR"."EXPDAT">=TO_DATE(' 2010-01-01 00:00:00', 'syyyy-mm-dd hh24:mi:ss') AND
+              INSTR("MEMBCOVR"."MEMBNO",'-')=0 AND (UPPER("MEMBCOVR"."GRPNUM")='CAMC' OR UPPER("MEMBCOVR"."GRPNUM")='CAPE'
+              OR UPPER("MEMBCOVR"."GRPNUM")='CHP') AND "MEMBCOVR"."EFFDAT"<>"MEMBCOVR"."EXPDAT"))
+  14 - access("MEMBCOVR"."MEMBNO"="MEMBNO")
+  16 - access("MEMBCOVR"."MEMBNO"="MEMBER"."MEMBNO")
+  17 - filter("MEMBER"."MEMBER"="MAXMEMBER"."MAXMEMB")
+  18 - filter(COUNT(*)>0)
+  21 - filter("MEMBER"."LSTCHG"=MAX("LSTCHG"))
+  23 - access("MEMBER"."MEMBNO"="MEMBNO")
+  24 - access("MEMBER"."MEMBNO"="MEMBER"."MEMBNO")
+  25 - access("MEMBNO"="MEMBER"."MEMBNO")
+  26 - access("MEMBER"."MEMBNO"="MEMBNO")
+  28 - access("MEMBCOVR"."MEMBNO"="O"."MBR_NBR" AND "MEMBCOVR"."GRPNUM"="O"."GRP_NBR" AND
+              "O"."ID_TYPE_CD"='SI')
+  29 - access("DEMOGRAP"."MEMBNO"="MEMBCOVR"."MEMBNO")
+  31 - filter((INTERNAL_FUNCTION("CARRIER") AND "ACCOUNT_START_DATE" IS NOT NULL AND "GROUP_CD" IS NOT NULL
+              AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_END_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROUP_EXPD
+              T") AND SYS_OP_MAP_NONNULL("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_START_DATE")=SYS_OP_MAP_NONNULL("COA"."SUBGROU
+              P_EFFDT") AND DECODE("NAVITUS_CURRENT_ELIG_WRK"."SUBGROUP_ID","COA"."SUBGROUP_ID",0,1)=0))
+  32 - access("COA"."INDIVIDUAL_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_START_DATE" AND
+              "COA"."INDIVIDUAL_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."INDIVIDUAL_END_DATE" AND
+              "COA"."GROUP_EFFDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_START_DATE" AND
+              "COA"."GROUP_ENDDT"="NAVITUS_CURRENT_ELIG_WRK"."GROUP_END_DATE")
+       filter("GROUP_END_DATE">"GROUP_START_DATE")
+
+                                                  Session-level wait-event information
+-----------------------------------------------------------------------------------------------------------------------------------
+| QCSID        | SID          | Type  | Event Name                  | Time Waited (s) | Total Waits  | Avg Wait (s) | Max Wait (s)|
+-----------------------------------------------------------------------------------------------------------------------------------
+|              | 1@428,28745  | WORKER| direct path read            |               5 |          836 |            0 |           0 |
+|              | 1@428,28745  | WORKER| SQL*Net message from client |               0 |            9 |            0 |           0 |
+|              | 1@428,28745  | WORKER| events in waitclass Other   |               0 |           13 |            0 |           0 |
+|              | 1@428,28745  | WORKER| log file sync               |               0 |            1 |            0 |           0 |
+|              | 1@428,28745  | WORKER| Disk file operations I/O    |               0 |            7 |            0 |           0 |
+|              | 1@428,28745  | WORKER| SQL*Net message to client   |               0 |           10 |            0 |           0 |
+-----------------------------------------------------------------------------------------------------------------------------------
+
+563 rows selected.
