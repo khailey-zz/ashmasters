@@ -1,3 +1,16 @@
+COL lock_name FORMAT A30 
+COL waiter format 99999 HEADING "Waiter"
+COl lmode FORMAT 99 HEADING "Lock|mode"
+COL p2 FORMAT 9999999
+COL p3 FORMAT 9999999
+COL object FORMAT A30
+COL otype FORMAT A7
+COL filen FORMAT 9999
+COL blocker FORMAT 99999
+
+SET LINESIZE 200
+
+
 select
        substr(event,0,20)                  lock_name,
        ash.session_id                      waiter,
