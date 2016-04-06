@@ -24,7 +24,7 @@ order by 3 desc
 / 
 
 select current_obj#, 10*sum(greatest(1,1/time_waited)) as estimated_io_requests,
-                     avg(greatest(1,time_waited)) as estimated_wait_time, 
+                     avg(greatest(1,time_waited)) as estimated_wait_time
 from dba_hist_active_sess_history
 where  time_waited > 0
 and event='db file sequential read'
