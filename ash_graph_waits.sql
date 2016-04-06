@@ -33,7 +33,7 @@
 hello from RMOUG
 
 */
-ef v_secs=3600 --  bucket size
+Def v_secs=3600 --  bucket size
 Def v_secs=60 --  bucket size
 Def v_bars=5 -- size of one AAS in characters
 Def v_graph=80
@@ -59,13 +59,13 @@ select
         decode(spct,null,null,second)                        second,
         substr(
              substr(
-                  rpad('+',round((  cpu/&v_secs)*&v_bars),'+’) ||
+                  rpad('+',round((  cpu/&v_secs)*&v_bars),'+') ||
                   rpad('-',round((waits/&v_secs)*&v_bars),'-') ||
                   rpad(' ',p.value * &v_bars,' ')
                ,0,(p.value * &v_bars)) ||
              p.value  ||
              substr(
-                  rpad('+',round((  cpu/&v_secs)*&v_bars),'+’) ||
+                  rpad('+',round((  cpu/&v_secs)*&v_bars),'+') ||
                   rpad('-',round((waits/&v_secs)*&v_bars),'-') ||
                   rpad(' ',p.value * &v_bars,' '),
                (p.value * &v_bars))
