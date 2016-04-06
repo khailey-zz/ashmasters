@@ -87,7 +87,7 @@ where
    f.file_id = io.p1
    and o.object_id (+)= io.CURRENT_OBJ#
    and tbs.tablespace_name= f.tablespace_name 
-Order by /* tcnt */, sql_id, cnt
+Order by /* tcnt, */ sql_id, cnt
 /
 
 clear breaks
